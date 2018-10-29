@@ -5,9 +5,9 @@ To use, you need your Azure Storage Account Name, Storage Account Key, and Conta
 custom JSON configuration file.  The JSON should be structured like:
 
 {
-    "StorageAccountName": "<Name>",
-    "StorageAccountKey": "<Key>",
-    "ContainerName": "<Container>"
+    "StorageAccountName": "[Name]",
+    "StorageAccountKey": "[Key]",
+    "ContainerName": "[Container]"
 }
 
 Once you have filled out all three fields the rest runs like a normal find and replace feature.  Find a piece of the filename, a full
