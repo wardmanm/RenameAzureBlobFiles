@@ -1,4 +1,4 @@
-# RenameAzureBlobFilesByName
+# RenameAzureBlobFiles
 A handy little utility to find and rename blob files in Azure Storage.
 
 To use, you need your Azure Storage Account Name, Storage Account Key, and Container Name.  You can type this in manually or load a
