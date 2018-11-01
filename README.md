@@ -14,3 +14,5 @@ Once you have filled out all three fields the rest runs like a normal find and r
 filename, or an extension using "Find".  Once you hit "Replace" the utility will first re-check your find field and tell you how many
 files will be renamed.  If you say yes to the rename dialog, it will then cycle through the files it finds and replace whatever
 your find string is with your replace string.  
+
+Disclaimer: Use this at your own risk.  I'm not responsible if you break your Azure blob files with bad naming or something goes horrifyingly wrong.  
