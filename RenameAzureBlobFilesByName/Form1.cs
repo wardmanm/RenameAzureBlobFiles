@@ -139,10 +139,11 @@ namespace RenameAzureBlobFilesByName
 					{
 						//Get rid of all of the uri string except for the filename to search
 						string uriString = x.Uri.ToString().ToLower();
+						string findString = Uri.EscapeDataString(findNameTextBox.Text.ToLower());
 
 						int pos = uriString.LastIndexOf("/") + 1;
 						//Look for the user's search term
-						if (uriString.Substring(pos, uriString.Length - pos).Contains(findNameTextBox.Text.ToLower()))
+						if (uriString.Substring(pos, uriString.Length - pos).Contains(findString))
 						{
 							if (!getCountOnly && !replace)
 							{
