@@ -16,6 +16,7 @@ namespace RenameAzureBlobFilesByName
 		StorageCredentials cred = null;
 		CloudBlobContainer container = null;
 		int fileCount = 0;
+		List<IListBlobItem> listToChange = new List<IListBlobItem>();
 
 		public MainForm()
 		{
@@ -56,6 +57,8 @@ namespace RenameAzureBlobFilesByName
 		private void replaceBtn_Click(object sender, EventArgs e)
 		{
 			fileCount = 0;
+			listToChange = new List<IListBlobItem>();
+
 			if (cred == null && container == null)
 			{
 				cred = new StorageCredentials(storageAccountNameTextBox.Text, storageAccountKeyTextBox.Text);
@@ -68,17 +71,17 @@ namespace RenameAzureBlobFilesByName
 
 			IterateThroughFolders(list, true, false);
 
-			var confirmResult = MessageBox.Show("You will be renaming " + fileCount + " files! Do you wish to continue?",
+			var confirmResult = MessageBox.Show("You will be renaming " + fileCount + " file(s)! Do you wish to continue?",
 						 "Rename Files",
 						 MessageBoxButtons.YesNo);
 			if (confirmResult == DialogResult.Yes)
 			{
 				fileCount = 0;
-				IterateThroughFolders(list, false, true);
+				IterateThroughFolders(listToChange, false, true);
 			}
 
 			resultsBox.Items.Add("----------------------------------------------------------");
-			resultsBox.Items.Add(fileCount + " files were renamed!");
+			resultsBox.Items.Add(fileCount + " file(s) were renamed!");
 			resultsBox.TopIndex = resultsBox.Items.Count - 1;
 
 			ButtonsReenabledWorking(true);
@@ -148,6 +151,10 @@ namespace RenameAzureBlobFilesByName
 							if (!getCountOnly && !replace)
 							{
 								resultsBox.Items.Add("Uri: " + x.Uri);
+							}
+							else if (getCountOnly)
+							{
+								listToChange.Add(x);
 							}
 							else if (replace)
 							{
