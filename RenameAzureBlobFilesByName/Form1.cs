@@ -139,7 +139,7 @@ namespace RenameAzureBlobFilesByName
 					{
 						//Get rid of all of the uri string except for the filename to search
 						string uriString = x.Uri.ToString().ToLower();
-						string findString = Uri.EscapeDataString(findNameTextBox.Text.ToLower());
+						string findString = findNameTextBox.Text.ToLower().Replace("#", "%23");
 
 						int pos = uriString.LastIndexOf("/") + 1;
 						//Look for the user's search term
@@ -167,8 +167,9 @@ namespace RenameAzureBlobFilesByName
 			resultsBox.Items.Add(uriString + " RENAMED TO:");
 
 			int pos = uriString.LastIndexOf("/") + 1;
+			string findString = findNameTextBox.Text.Replace("#", "%23");
 			string preChangeFileName = uriString.Substring(pos, uriString.Length - pos);
-			string postChangeFileName = preChangeFileName.Replace(findNameTextBox.Text, replaceTextBox.Text);
+			string postChangeFileName = preChangeFileName.Replace(findString, replaceTextBox.Text);
 			string newUriString = uriString.Replace(preChangeFileName, postChangeFileName);
 
 			CopyAndRenameBlobFile(uriString, newUriString);
@@ -187,8 +188,7 @@ namespace RenameAzureBlobFilesByName
 
 			if (!await blobCopy.ExistsAsync())
 			{
-				CloudBlockBlob blob = container.GetBlockBlobReference(oldFileName);
-				var test = blob.ExistsAsync();
+				CloudBlockBlob blob = container.GetBlockBlobReference(oldFileName.Replace("%23", "#"));
 
 				if (await blob.ExistsAsync())
 				{
